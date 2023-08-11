@@ -6,16 +6,32 @@ from dotenv import load_dotenv
 import base64
 from googleapiclient.discovery import build
 import customtkinter
-from tkinter import Message,messagebox
+from tkinter import messagebox
+from PIL import Image
+
+class MessageBox():
+
+    def Ok(self, message): 
+        root = customtkinter.CTkToplevel()
+        root.title('Saved')
+        root.geometry('200x160')
+        root.wm_attributes('-topmost',True)
+        label = customtkinter.CTkLabel(root, text= message)
+        label.place(x= 90, y = 45)
+        img = customtkinter.CTkImage(dark_image= Image.open('tick.png'), size = (40,40))
+        img_label = customtkinter.CTkLabel(root, image= img, text= "")
+        img_label.place(x= 20, y=40)
+        button = customtkinter.CTkButton(root, text = 'Ok', width= 180,  command= lambda : root.destroy())
+        button.place(x=10, y = 120)
+
 
 def convert(playlist):
-    
     if playlist == "":
         messagebox.showerror("Please enter a playlist url.")
+        
         return False
 
-    new = customtkinter.CTkToplevel()
-    new.geometry("300x300")
+
 
     load_dotenv()
 
@@ -76,7 +92,7 @@ def convert(playlist):
         filename = f"{video_info['title']}.mp3"
         options={
                 'format':'bestaudio/best',
-                'outtmpl':filename,
+                'outtmpl':f"./downloaded_song/{filename}",
             }
         with yt_dlp.YoutubeDL(options) as ydl:
             ydl.download([video_info['webpage_url']])
@@ -90,10 +106,10 @@ def convert(playlist):
         )
         res = request.execute()
         act_url = url+res['items'][0]['id']['videoId']
-
-        label = customtkinter.CTkLabel(new, text = f"Downloading {i}")
-        label.grid(row = j,column = 0)
         download(act_url)
+
+    a = MessageBox()
+    a.Ok("Completed")
 
     
 
