@@ -1,0 +1,6 @@
+requests
+yt_dlp
+google-api-python-client
+customtkinter
+tk
+Pillow
