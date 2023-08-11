@@ -3,7 +3,7 @@
 This project converts Spotify playlist songs into an mp3.
 
 Before running the gui.py, copy the requirements.txt and run the command 
-`pip install -requirement.txt` to get all the libraries.
+`pip install -r requirement.txt` to get all the libraries.
 
 # STEPS:
 1. Run the gui.py
